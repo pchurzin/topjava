@@ -47,4 +47,8 @@ public class MealWithExceed {
     public boolean isExceed() {
         return exceed;
     }
+
+    public long getId() {
+        return id;
+    }
 }
