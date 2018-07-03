@@ -30,12 +30,12 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameterMap().containsKey(PARAM_ID)) {
-            Meal meal = mealService.getMealById(Long.parseLong(request.getParameter(PARAM_ID)));
+            Meal meal = mealService.getById(Long.parseLong(request.getParameter(PARAM_ID)));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("/meal_form.jsp").forward(request, response);
         }
 
-        List<Meal> meals = mealService.getMeals();
+        List<Meal> meals = mealService.getAll();
         List<MealWithExceed> mealsWithExceed = MealsUtil.getFilteredWithExceeded(meals, LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY);
         request.setAttribute("meals", mealsWithExceed);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
@@ -50,20 +50,20 @@ public class MealServlet extends HttpServlet {
         } else if ("update".equalsIgnoreCase(action)) {
             doPut(req, resp);
         } else if ("create".equalsIgnoreCase(action)) {
-            mealService.addMeal(getMealFromRequest(req));
+            mealService.add(getMealFromRequest(req));
         }
         resp.sendRedirect("/topjava/meals");
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        mealService.removeMeal(Long.valueOf(req.getParameter(PARAM_ID)));
+        mealService.remove(Long.valueOf(req.getParameter(PARAM_ID)));
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Meal meal = getMealFromRequest(req);
-        mealService.updateMeal(Long.valueOf(req.getParameter(PARAM_ID)), meal);
+        mealService.update(Long.valueOf(req.getParameter(PARAM_ID)), meal);
     }
 
     private Meal getMealFromRequest(HttpServletRequest req) {

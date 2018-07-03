@@ -15,21 +15,21 @@ public class MealServiceMemory implements MealService {
     private final AtomicLong counter = new AtomicLong(1L);
 
     public MealServiceMemory() {
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000));
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500));
-        addMeal(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500));
+        add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
     }
 
     @Override
-    public List<Meal> getMeals() {
+    public List<Meal> getAll() {
         return new ArrayList<>(meals.values());
     }
 
     @Override
-    public void addMeal(Meal meal) {
+    public void add(Meal meal) {
         if (meal == null) {
             return;
         }
@@ -39,12 +39,12 @@ public class MealServiceMemory implements MealService {
     }
 
     @Override
-    public void removeMeal(long id) {
+    public void remove(long id) {
         meals.remove(id);
     }
 
     @Override
-    public void updateMeal(long id, Meal newMeal) {
+    public void update(long id, Meal newMeal) {
         if (newMeal == null) {
             return;
         }
@@ -53,7 +53,7 @@ public class MealServiceMemory implements MealService {
     }
 
     @Override
-    public Meal getMealById(long id) {
+    public Meal getById(long id) {
         return meals.get(id);
     }
 }
