@@ -25,7 +25,7 @@ public class MealServlet extends HttpServlet {
     public static final String PARAM_ID = "id";
     private static final Logger log = getLogger(MealServlet.class);
     private static final MealService mealService = new MealServiceMemory();
-    private static final DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,7 +68,7 @@ public class MealServlet extends HttpServlet {
 
     private Meal getMealFromRequest(HttpServletRequest req) {
         return new Meal(
-                LocalDateTime.parse(req.getParameter("date") + " " + req.getParameter("time"), formater),
+                LocalDateTime.parse(req.getParameter("date") + " " + req.getParameter("time"), formatter),
                 req.getParameter("description"),
                 Integer.parseInt(req.getParameter("calories")));
     }
