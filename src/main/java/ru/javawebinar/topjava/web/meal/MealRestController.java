@@ -26,25 +26,20 @@ public class MealRestController {
         this.service = service;
     }
 
-    public List<MealWithExceed> getAll() {
+    public List<Meal> getAll() {
         log.info("get All");
-        return MealsUtil.getWithExceeded(service.getAll(authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+        return service.getAll(authUserId());
     }
 
-    public MealWithExceed get(int id) {
+    public Meal get(int id) {
         log.info("get {}", id);
-        return getAll()
-                .stream()
-                .filter(mealWithExceed -> mealWithExceed.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return service.get(id, authUserId());
     }
 
-    public MealWithExceed create(Meal meal) {
+    public Meal create(Meal meal) {
         log.info("create {}", meal);
         checkNew(meal);
-        service.create(meal, authUserId());
-        return get(meal.getId());
+        return service.create(meal, authUserId());
     }
 
     public void delete(int id) {
