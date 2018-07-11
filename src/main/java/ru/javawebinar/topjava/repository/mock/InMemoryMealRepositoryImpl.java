@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Repository
@@ -24,7 +25,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public Meal save(Meal meal, Integer userId) {
+    public Meal save(Meal meal, int userId) {
         if (!repository.containsKey(userId)) {
             repository.put(userId, new ConcurrentHashMap<>());
         }
@@ -38,22 +39,33 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public boolean delete(int id, Integer userId) {
+    public boolean delete(int id, int userId) {
         return repository.containsKey(userId) && (null != repository.get(userId).remove(id));
     }
 
     @Override
-    public Meal get(int id, Integer userId) {
+    public Meal get(int id, int userId) {
         return repository.containsKey(userId) ? repository.get(userId).get(id) : null;
     }
 
     @Override
-    public List<Meal> getAll(Integer userId) {
-        return repository.containsKey(userId) ?
-                repository.get(userId).values()
-                        .stream()
-                        .sorted(Comparator.comparing(Meal::getDateTime).reversed())
-                        .collect(Collectors.toList()) :
-                Collections.emptyList();
+    public List<Meal> get(int userId, Predicate<Meal> filter, Comparator<Meal> sort) {
+        if (!repository.containsKey(userId)) {
+            return Collections.emptyList();
+        }
+
+        if (sort == null) {
+            sort = Comparator.comparing(Meal::getDateTime).reversed();
+        }
+
+        if (filter == null) {
+            filter = meal -> true;
+        }
+
+        return repository.get(userId).values()
+                .stream()
+                .filter(filter)
+                .sorted(sort)
+                .collect(Collectors.toList());
     }
 }

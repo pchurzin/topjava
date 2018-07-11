@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
@@ -26,9 +26,9 @@ public class MealRestController {
         this.service = service;
     }
 
-    public List<Meal> getAll() {
+    public List<Meal> get(Predicate<Meal> filter, Comparator<Meal> sort) {
         log.info("get All");
-        return service.getAll(authUserId());
+        return service.get(authUserId(),filter, sort);
     }
 
     public Meal get(int id) {

@@ -7,7 +7,9 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -40,7 +42,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<Meal> getAll(int userId) {
-        return repository.getAll(userId);
+    public List<Meal> get(int userId, Predicate<Meal> filter, Comparator<Meal> sort) {
+        return repository.get(userId, filter, sort);
     }
 }
