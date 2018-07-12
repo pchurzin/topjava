@@ -22,6 +22,13 @@
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <hr/>
+    <form action="meals">
+        <label for="startDate">From date</label><input type="date" name="startDate" id="startDate">
+        <label for="endDate">To date</label><input type="date" name="endDate" id="endDate">
+        <label for="startTime">From time</label><input type="time" name="startTime" id="startTime">
+        <label for="endTime">To time</label><input type="time" name="endTime" id="endTime">
+        <input type="submit" value="Filter">
+    </form>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

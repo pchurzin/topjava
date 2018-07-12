@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletException;
@@ -13,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -70,8 +71,27 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("get");
-                request.setAttribute("meals",
-                        MealsUtil.getWithExceeded(controller.get(null, null), SecurityUtil.authUserCaloriesPerDay()));
+                LocalDate startDate = null;
+                try {
+                    startDate = LocalDate.parse(request.getParameter("startDate"));
+                } catch (Exception ignored) {
+                }
+                LocalDate endDate = null;
+                try {
+                    endDate = LocalDate.parse(request.getParameter("endDate"));
+                } catch (Exception ignored) {
+                }
+                LocalTime startTime = null;
+                try {
+                    startTime = LocalTime.parse(request.getParameter("startTime"));
+                } catch (Exception ignored) {
+                }
+                LocalTime endTime = null;
+                try {
+                    endTime = LocalTime.parse(request.getParameter("endTime"));
+                } catch (Exception ignored) {
+                }
+                request.setAttribute("meals", controller.get(startDate, endDate, startTime, endTime));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
