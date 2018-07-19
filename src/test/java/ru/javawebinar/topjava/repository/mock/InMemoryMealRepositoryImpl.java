@@ -7,12 +7,10 @@ import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
@@ -32,14 +31,6 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     // Map  userId -> (mealId-> meal)
     private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
-
-    {
-        MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
-
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
-    }
-
 
     @Override
     public Meal save(Meal meal, int userId) {
@@ -54,7 +45,23 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @PostConstruct
     public void postConstruct() {
-        log.info("+++ PostConstruct");
+        log.info("Populating with initial test data");
+        repository.clear();
+
+        Map<Integer, Meal> adminMeal = new ConcurrentHashMap<>();
+        adminMeal.put(MEAL_0.getId(), MEAL_0);
+        adminMeal.put(MEAL_1.getId(), MEAL_1);
+        adminMeal.put(MEAL_2.getId(), MEAL_2);
+        repository.put(ADMIN_ID, adminMeal);
+
+        Map<Integer, Meal> userMeal = new ConcurrentHashMap<>();
+        userMeal.put(MEAL_3.getId(), MEAL_3);
+        userMeal.put(MEAL_4.getId(), MEAL_4);
+        userMeal.put(MEAL_5.getId(), MEAL_5);
+        userMeal.put(MEAL_6.getId(), MEAL_6);
+        userMeal.put(MEAL_7.getId(), MEAL_7);
+        userMeal.put(MEAL_8.getId(), MEAL_8);
+        repository.put(USER_ID, userMeal);
     }
 
     @PreDestroy
