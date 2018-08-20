@@ -28,6 +28,16 @@ public class MealsUtil {
         return getFilteredWithExceeded(meals, caloriesPerDay, meal -> Util.isBetween(meal.getTime(), startTime, endTime));
     }
 
+    public static List<MealWithExceed> getFilteredWithExceeded(Collection<Meal> meals, int caloriesPerDay, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        final LocalDate sd = Util.orElse(startDate, LocalDate.MIN);
+        final LocalDate ed = Util.orElse(endDate, LocalDate.MAX);
+        final LocalTime st = Util.orElse(startTime, LocalTime.MIN);
+        final LocalTime et = Util.orElse(endTime, LocalTime.MAX);
+        return getFilteredWithExceeded(meals, caloriesPerDay,
+                meal -> Util.isBetween(meal.getTime(), st, et) &&
+                        Util.isBetween(meal.getDate(), sd, ed));
+    }
+
     private static List<MealWithExceed> getFilteredWithExceeded(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
