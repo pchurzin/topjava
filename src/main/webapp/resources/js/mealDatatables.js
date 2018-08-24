@@ -38,14 +38,7 @@ $(function () {
 $(function () {
     var form = $("#filterForm");
     form.on("submit", function () {
-        $.ajax({
-            url: ajaxUrl,
-            type: "GET",
-            data: form.serialize(),
-            success: function (data) {
-                datatableApi.clear().rows.add(data).draw();
-            }
-        });
+        updateTable(form.serialize());
         return false;
     });
 });
