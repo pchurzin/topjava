@@ -30,6 +30,7 @@
                 <input class="form-control" id="endTime" type="time" name="endTime" value="${param.endTime}">
             </div>
             <button class="btn btn-secondary" type="submit" id="filter"><spring:message code="meal.filter"/></button>
+            <button class="btn btn-secondary" type="reset" id="reset"><spring:message code="meal.reset"/></button>
         </form>
         <hr>
         <%--<a href="meals/create"><spring:message code="meal.add"/></a>--%>
@@ -37,7 +38,7 @@
         <br/>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
-            <spring:message code="common.add"/>
+            <spring:message code="meal.add"/>
         </button>
         <table border="1" cellpadding="8" cellspacing="0" id="datatable" class="table table-striped">
             <thead>

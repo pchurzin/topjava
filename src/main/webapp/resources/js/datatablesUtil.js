@@ -27,10 +27,9 @@ function deleteRow(id) {
     });
 }
 
-function updateTable(params) {
+function updateTable() {
     $.ajax({
         url: ajaxUrl,
-        data : params,
         success: function (data) {
             datatableApi.clear().rows.add(data).draw();
         }

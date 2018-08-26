@@ -38,7 +38,27 @@ $(function () {
 $(function () {
     var form = $("#filterForm");
     form.on("submit", function () {
-        updateTable(form.serialize());
+        updateTable();
         return false;
     });
+
+    $("#reset").on("click", function () {
+        form.find(":input").val("");
+        updateTable();
+        return false;
+    })
+});
+$(function () {
+    var oldUpdateTable = updateTable;
+    var form = $("#filterForm");
+
+    updateTable = function () {
+        $.ajax({
+            url: ajaxUrl,
+            data: form.serialize(),
+            success: function (data) {
+                datatableApi.clear().rows.add(data).draw();
+            }
+        });
+    }
 });
