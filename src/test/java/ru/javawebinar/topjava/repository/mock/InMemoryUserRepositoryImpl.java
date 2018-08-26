@@ -61,4 +61,13 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public boolean setEnabled(int id, boolean enabled) {
+        if (repository.containsKey(id)) {
+            repository.get(id).setEnabled(enabled);
+            return true;
+        }
+        return false;
+    }
 }
