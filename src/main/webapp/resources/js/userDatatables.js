@@ -40,3 +40,22 @@ $(function () {
     });
     makeEditable();
 });
+
+$(function () {
+   $("#datatable").find("input[type='checkbox']")
+       .on("click", function () {
+           var id = $($(this).parents("tr[id]")[0]).attr("id");
+           var d = {
+               enabled : this.checked
+           };
+           $.ajax({
+               url: ajaxUrl + id,
+               data: d,
+               method: "POST",
+               success: function () {
+                   successNoty("Updated");
+                   updateTable();
+               }
+           });
+       })
+});
