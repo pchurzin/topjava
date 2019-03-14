@@ -19,7 +19,7 @@ Java Enterprise Online Project
 ### <a href="https://github.com/JavaOPs/topjava/wiki">Требования к участникам, Wiki</a>
 ### <a href="cv.md">Составление резюме, подготовка к интервью, поиск работы</a>
 
-Вводное занятие
+Вводное занятие (обязательно смотреть все видео)
 ===============
 ## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 1. <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFY1ZDNXRCd1NCTG8">Осваиваем Java Enterprise. Трудоустройство. Ответы на вопросы.</a>
 - <a href="https://goo.gl/XNVOj4">Слайды презентации</a>
@@ -41,7 +41,6 @@ Java Enterprise Online Project
     -  <a href="https://illustrated-git.readthedocs.org/en/latest/#working-with-remote-repositories">Working with remote repositories</a>
     -  <a href="https://www.youtube.com/playlist?list=PLIU76b8Cjem5B3sufBJ_KFTpKkMEvaTQR">Видео по обучению Git</a>
     -  <a href="https://blog.interlinked.org/tutorials/git.html">Git Overview</a>
-    -  <a href="http://geekbrains.ru/gitstart">Видеокурс по Git</a>
     -  [Основы Git за 20 минут](https://www.youtube.com/watch?v=TMeZGvtQnT8)
     -  [Git - для новичков](https://www.youtube.com/watch?list=PLY4rE9dstrJyTdVJpv7FibSaXB4BHPInb&v=PEKN8NtBDQ0)
 
@@ -68,7 +67,7 @@ Java Enterprise Online Project
 
 ## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Домашнее задание HW0
 ```
-Реализовать метод UserMealsUtil.getFilteredWithExceeded:
+Реализовать метод UserMealsUtil.getFilteredWithExceeded через циклы (`forEach`):
 -  должны возвращаться только записи между startTime и endTime 
 -  поле UserMealWithExceed.exceed должно показывать, 
                                      превышает ли сумма калорий за весь день параметра метода caloriesPerDay  
@@ -76,13 +75,15 @@ Java Enterprise Online Project
 Т.е UserMealWithExceed - это запись одной еды, но поле exceeded будет одинаково для всех записей за этот день.
     
 - Проверьте результат выполнения ДЗ (можно проверить логику в http://topjava.herokuapp.com , список еды)
-- Оцените Time complexity вашего алгоритма, если он O(N*N)- попробуйте сделать O(N).
+- Оцените Time complexity алгоритма. Если она больше O(N), например O(N*N) или N*log(N), сделайте O(N).
 ```
 -  <a href="http://www.mscharhag.com/2014/02/java-8-datetime-api.html">Java 8 Date and Time API</a>
 -  <a href="https://tproger.ru/translations/algorithms-and-data-structures">Алгоритмы и структуры данных для начинающих: сложность алгоритмов</a>
 -  <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFNEJWRFJkVDA3TkU/view">Time complexity</a>
 -  <a href="https://ru.wikipedia.org/wiki/Временная_сложность_алгоритма">Временная сложность алгоритма</a>
 -  <a href="https://ru.wikipedia.org/wiki/Вычислительная_сложность">Вычислительная сложность</a>
+
+#### ВНИМАНИЕ: варианты Optional делайте в `UserMealsUtil` в одной ветке в разных методах. Проще делать, проще проверять
 
 #### Optional (Java 8 Stream API)
 ```
@@ -91,7 +92,8 @@ Java Enterprise Online Project
 -  <a href="http://www.youtube.com/watch?v=_PDIVhEs6TM">Видео: Доступно о Java 8 Lambda</a>
 -  <a href="https://devcolibri.com/java-8-killer-features-%D1%87%D0%B0%D1%81%D1%82%D1%8C-1/">Java 8: Lambda выражения</a>
 -  <a href="https://devcolibri.com/java-8-killer-features-%D1%87%D0%B0%D1%81%D1%82%D1%8C-2/">Java 8: Потоки</a>
--  <a href="http://prologistic.com.ua/polnoe-rukovodstvo-po-java-8-stream.html">Pуководство по Java 8 Stream</a>
+-  <a href="https://javadevblog.com/polnoe-rukovodstvo-po-java-8-stream.html">Pуководство по Java 8 Stream</a>
+-  <a href="https://annimon.com/article/2778">Java 8 Stream API в картинках и примерах</a>
 -  [7 способов использовать groupingBy в Stream API](https://habrahabr.ru/post/348536)
 -  <a href="http://habrahabr.ru/post/224593/">Лямбда-выражения в Java 8</a>
 -  <a href="https://github.com/winterbe/java8-tutorial">A Guide to Java 8</a>
@@ -107,7 +109,9 @@ Java Enterprise Online Project
 ```
 Сделать реализацию со сложностью O(N):
 - циклом за 1 проход по List<UserMeal>. Обратите внимание на п.13 замечаний
-- через Stream API за 1 проход по Stream<UserMeal>
+- через Stream API за 1 проход по исходному списку Stream<UserMeal> meals
+  - возможно дополнительные проходы по частям списка
+  - нельзя использовать внешние коллекции, не являющиеся частью коллектора или результатами работы stream
 ```
 #### Замечания по использованию Stream API:
 - Когда встречаешь что-то непривычное, приходится перестраивать мозги. Например, переход с процедурного на ООП программирование дается непросто. Те, кто не знает шаблонов (и не хотят учить) также их встречают плохо. Хорошая новость в том, что если это принять и начать использовать, то начинаешь получать от этого удовольствие. И тут главное не впасть в другую крайность:
@@ -144,6 +148,7 @@ Java Enterprise Online Project
 Все остальное - опционально.
 
 #### HTML, JavaScript, CSS 
+- [Basic HTML and HTML5](https://learn.freecodecamp.org/responsive-web-design/basic-html-and-html5/say-hello-to-html-elements/)
 - [Справочник по WEB](https://developer.mozilla.org/ru/)
 - [Видео по WEB технологиям](https://www.youtube.com/user/WebMagistersRu/playlists)
 - [Изучение JavaScript в одном видео уроке за час](https://www.youtube.com/watch?v=QBWWplFkdzw)
@@ -185,6 +190,7 @@ Java Enterprise Online Project
 -  <a href="https://stepic.org/course/Введение-в-базы-данных-551">Курс "Введение в базы данных"</a>
 
 #### Разное
+-  <a href="http://javaops.ru/view/test">Вопросы по собеседованию, ресурсы для подготовки</a>
 -  <a href="http://jeeconf.com/materials/intellij-idea/">Эффективная работа с кодом в IntelliJ IDEA</a>
 -  <a href="http://www.quizful.net/test">Quizful- тесты онлайн</a>
 -  <a href="https://stepic.org/course/Введение-в-Linux-73">Введение в Linux</a>
